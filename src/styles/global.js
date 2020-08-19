@@ -19,7 +19,7 @@ export default createGlobalStyle`
   }
 
   body, input, button {
-    font: 14px, sans-serif;
+    font: 14px Roboto, sans-serif;
   }
 
   #root {
