@@ -1,27 +1,49 @@
 import React, { Component } from 'react';
 import api from '../../services/api';
+import { formatPrice } from '../../util/format';
 
 import { MdAddShoppingCart } from 'react-icons/md';
 import { ProductList } from './styles';
 
 class Home extends Component {
+  state = {
+    products: [],
+  };
+
+  async componentDidMount() {
+    const res = await api.get('/products');
+
+    const data = res.data.map(product => ({
+      ...product,
+      priceFormatted: formatPrice(product.price),
+    }));
+
+    this.setState({ products: data });
+  }
+
   render() {
+    const { products } = this.state;
+
     return (
       <ProductList>
-        <li>
-          <img src="https://static.netshoes.com.br/produtos/tenis-nike-revolution-5-masculino/26/HZM-1731-026/HZM-1731-026_zoom1.jpg?ts=1571078789&" alt="Tênis"/>
-          <strong>Tênis Nike com o nome muito grande que quebra a linha</strong>
-          <span>R$129,99</span>
+        { products.map(product => (
+          <li key={product.id}>
+            <img src={product.image} alt={product.title}/>
+            <strong>{product.title}</strong>
+            <span>{product.priceFormatted}</span>
 
-          <button>
-            <div>
-              <MdAddShoppingCart size={16} color="#FFF" />
-              3
-            </div>
+            <button>
+              <div>
+                <MdAddShoppingCart size={16} color="#FFF" />
+                3
+              </div>
 
-            <span>Adicionar ao carrinho</span>
-          </button>
-        </li>
+              <span>Adicionar ao carrinho</span>
+            </button>
+          </li>
+        )) }
+
+        
       </ProductList>  
     );
   }
