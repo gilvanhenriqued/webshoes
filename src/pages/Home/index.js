@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import api from '../../services/api';
 import { formatPrice } from '../../util/format';
 import { connect } from 'react-redux';
-import { addToCart } from '../../store/modules/cart/actions';
+import { addToCartRequest } from '../../store/modules/cart/actions';
 
 import { MdAddShoppingCart } from 'react-icons/md';
 import { ProductList } from './styles';
@@ -23,10 +23,10 @@ class Home extends Component {
     this.setState({ products: data });
   }
 
-  handleAddProduct(product){
+  handleAddProduct(id){
     const { dispatch } = this.props;
 
-    dispatch(addToCart(product));
+    dispatch(addToCartRequest(id));
   }
 
   render() {
@@ -41,7 +41,7 @@ class Home extends Component {
             <strong>{product.title}</strong>
             <span>{product.priceFormatted}</span>
 
-            <button type="button" onClick={() => this.handleAddProduct(product)}>
+            <button type="button" onClick={() => this.handleAddProduct(product.id)}>
               <div>
                 <MdAddShoppingCart size={16} color="#FFF" />
                 {amount[product.id] || 0}
