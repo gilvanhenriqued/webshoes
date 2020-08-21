@@ -6,7 +6,7 @@ import { formatPrice } from '../../util/format';
 import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete } from 'react-icons/md';
 import { Container, ProductTable, Total } from './styles';
 
-function Cart({ cart, subtotal, dispatch }) {
+function Cart({ cart, dispatch, total }) {
   function increment(product) {
     dispatch(updateAmount(product.id, product.amount + 1));
   }
@@ -70,7 +70,7 @@ function Cart({ cart, subtotal, dispatch }) {
 
         <Total>
           <span>TOTAL</span>
-          <strong>R$1922,90</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
@@ -81,7 +81,12 @@ const mapStateToProps = state => ({
   cart: state.cart.map(product => ({
     ...product,
     subtotal: formatPrice(product.price * product.amount),
-  }))
+  })),
+  total: formatPrice(state.cart.reduce((total, product) => {
+    // each times, get the total (initializated with zero),
+    // and plus with the subtotal of buy
+    return total + (product.price * product.amount);
+  }, 0))
 });
 
 export default connect(
