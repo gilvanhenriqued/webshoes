@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { removeFromCart, updateAmount } from '../../store/modules/cart/actions';
+import { removeFromCart, updateAmountRequest } from '../../store/modules/cart/actions';
 import { formatPrice } from '../../util/format';
 
 import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete } from 'react-icons/md';
@@ -8,11 +8,11 @@ import { Container, ProductTable, Total } from './styles';
 
 function Cart({ cart, dispatch, total }) {
   function increment(product) {
-    dispatch(updateAmount(product.id, product.amount + 1));
+    dispatch(updateAmountRequest(product.id, product.amount + 1));
   }
 
   function decrement(product) {
-    dispatch(updateAmount(product.id, product.amount - 1));
+    dispatch(updateAmountRequest(product.id, product.amount - 1));
   }
 
   return (

@@ -7,7 +7,8 @@ import { MdShoppingBasket } from 'react-icons/md';
 import { Container, Cart } from './styles';
 import { Link } from 'react-router-dom';
 
-function Header({ cartSize }) {
+function Header({ cartSize, estado }) {
+  console.log(estado);
   return (
     <Container>
       <Link to="/">
@@ -27,4 +28,5 @@ function Header({ cartSize }) {
 
 export default connect(state => ({
   cartSize: state.cart.length,
+  estado: state
 }))(Header);
